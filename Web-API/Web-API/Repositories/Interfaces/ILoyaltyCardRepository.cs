@@ -12,5 +12,6 @@ namespace Web_API.Repositories.Interfaces
         Task DeleteAsync(string cardNumber);
         Task<bool> ExistsAsync(string cardNumber);
         Task<bool> UpdatePointsAsync(string cardNumber, int pointsChange);
+        Task<int> GetTotalCardsCountAsync();
     }
 }

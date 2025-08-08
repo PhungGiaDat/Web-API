@@ -66,4 +66,60 @@ namespace Web_API.Security.Handlers
     {
         // Additional options if needed
     }
+
+    public class DevelopmentAuthenticationHandler : AuthenticationHandler<DevelopmentAuthenticationSchemeOptions>
+    {
+        private const string TestRoleHeaderName = "X-Test-Role";
+
+        public DevelopmentAuthenticationHandler(
+            IOptionsMonitor<DevelopmentAuthenticationSchemeOptions> options,
+            ILoggerFactory logger,
+            UrlEncoder encoder,
+            ISystemClock clock)
+            : base(options, logger, encoder, clock)
+        {
+        }
+
+        protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+        {
+            var testRole = Request.Headers[TestRoleHeaderName].FirstOrDefault();
+            
+            if (string.IsNullOrEmpty(testRole))
+            {
+                // Default to Customer role if no header is provided
+                testRole = "Customer";
+            }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Role, testRole),
+                new Claim(ClaimTypes.NameIdentifier, $"test-{testRole.ToLower()}-id")
+            };
+
+            // Add specific claims based on role
+            switch (testRole.ToLower())
+            {
+                case "admin":
+                    claims.Add(new Claim("AdminId", "test-admin-id"));
+                    break;
+                case "customer":
+                    claims.Add(new Claim("CustomerId", "test-customer-id"));
+                    break;
+                case "shop":
+                    claims.Add(new Claim("ShopId", "test-shop-id"));
+                    break;
+            }
+
+            var identity = new ClaimsIdentity(claims, Scheme.Name);
+            var principal = new ClaimsPrincipal(identity);
+            var ticket = new AuthenticationTicket(principal, Scheme.Name);
+
+            return Task.FromResult(AuthenticateResult.Success(ticket));
+        }
+    }
+
+    public class DevelopmentAuthenticationSchemeOptions : AuthenticationSchemeOptions
+    {
+        // Additional options if needed for development authentication
+    }
 }

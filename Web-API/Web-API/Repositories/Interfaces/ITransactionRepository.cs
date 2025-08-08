@@ -1,4 +1,5 @@
 using Web_API.Data;
+using Web_API.Models;
 
 namespace Web_API.Repositories.Interfaces
 {
@@ -11,5 +12,7 @@ namespace Web_API.Repositories.Interfaces
         Task<IEnumerable<Transaction>> GetRecentTransactionsAsync(string cardNumber, int count = 10);
         Task<decimal> GetTotalPointsEarnedAsync(string cardNumber);
         Task<decimal> GetTotalPointsRedeemedAsync(string cardNumber);
+        Task<int> GetTotalPointsRedeemedGlobalAsync();
+        Task<IEnumerable<TopCustomer>> GetTopCustomersByPointsRedeemedAsync(int limit = 10);
     }
 }

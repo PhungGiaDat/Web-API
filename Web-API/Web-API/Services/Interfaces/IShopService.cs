@@ -4,11 +4,10 @@ namespace Web_API.Services.Interfaces
 {
     public interface IShopService
     {
-        Task<ApiResponse> GetAllShopsAsync();
-        Task<ApiResponse> GetShopByIdAsync(string shopId);
-        Task<ApiResponse> CreateShopAsync(CreateShopRequest request);
-        Task<ApiResponse> UpdateShopAsync(string shopId, UpdateShopRequest request);
-        Task<ApiResponse> DeleteShopAsync(string shopId);
+        Task<List<ShopResponse>> GetAllShopsAsync();
+        Task<SimpleApiResponse> CreateShopAsync(CreateShopRequest request);
+        Task<SimpleApiResponse> UpdateShopAsync(string shopId, UpdateShopRequest request);
+        Task<SimpleApiResponse> DeleteShopAsync(string shopId);
         Task<bool> ValidateShopApiKeyAsync(string shopId, string apiKey);
     }
 }

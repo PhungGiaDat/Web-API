@@ -24,9 +24,10 @@ builder.Services.AddScoped<IShopRepository, ShopRepository>();
 
 // Register Service interfaces
 builder.Services.AddScoped<ILoyaltyCardService, LoyaltyCardService>();
-// builder.Services.AddScoped<ITransactionService, TransactionService>();
-// builder.Services.AddScoped<IRewardService, RewardService>();
-// builder.Services.AddScoped<IShopService, ShopService>();
+builder.Services.AddScoped<ITransactionService, LoyaltyTransactionService>();
+builder.Services.AddScoped<IRewardService, RewardService>();
+builder.Services.AddScoped<IShopService, ShopService>();
+builder.Services.AddScoped<ISystemService, SystemService>();
 
 // Security services (interfaces created but implementations not yet done)
 // builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();

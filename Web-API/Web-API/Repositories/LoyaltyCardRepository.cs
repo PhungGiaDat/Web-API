@@ -80,5 +80,10 @@ namespace Web_API.Repositories
             
             return false;
         }
+
+        public async Task<int> GetTotalCardsCountAsync()
+        {
+            return await _context.LoyaltyCards.CountAsync();
+        }
     }
 }
